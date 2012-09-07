@@ -18,7 +18,7 @@ class Star(object):
 		self.Mass -= DAMAGE_FACTOR * damage
 		
 		if self.Mass <= 0:
-			Utils.dead(SYMBOL)
+			#todo: delete star from the sector
 			
 			if self.BecomesNova:
 				return random(0, 10) * 0.1 * INFLICT_DAMAGE 

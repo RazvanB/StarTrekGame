@@ -1,8 +1,8 @@
 import Utils
 from random import randint
 
-class Klington(object):
-	'''Represents a klingtonian ship'''
+class Klingon(object):
+	'''Represents a klingonian ship'''
 	
 	#constants
 	ENG_LOW_LIMIT = 25.0
@@ -25,13 +25,13 @@ class Klington(object):
 		
 		#the ship is destroyed
 		if self.Shield <= 0.0:
-			Utils.Dead(SYMBOL)
+			Utils.dead(SYMBOL)
 			return -1
 		
 		#if the ship is nearly destroyed use the last energy as shield
 		if self.Shield <= ENG_LOW_LIMIT and self.Energy > 0:
 			self.Shield += self.Energy
-			self.Energy = 0
+			self.Energy = 0.0
 			return 0
 			
 		#if the ship has enough energy counter-attack

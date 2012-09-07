@@ -19,7 +19,7 @@ class Enterprise(object):
 		
 		#the ship is destroyed
 		if self.Shield <= 0.0:
-			Utils.Dead(SYMBOL)
+			Utils.dead(SYMBOL)
 			
 		return 0
 		
