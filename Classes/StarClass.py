@@ -1,4 +1,4 @@
-import Utils
+from UtilClass import Util
 from random import randint
 
 class Star(object):

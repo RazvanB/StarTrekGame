@@ -1,4 +1,4 @@
-import Utils
+from UtilClass import Util
 from random import randint
 
 class Klingon(object):
@@ -25,7 +25,7 @@ class Klingon(object):
 		
 		#the ship is destroyed
 		if self.Shield <= 0.0:
-			Utils.dead(SYMBOL)
+			Util.dead(SYMBOL)
 			return -1
 		
 		#if the ship is nearly destroyed use the last energy as shield

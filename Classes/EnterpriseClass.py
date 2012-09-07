@@ -10,6 +10,7 @@ class Enterprise(object):
 		self.Energy = energy
 		self.Shield = 0.0
 		self.Torpedos = NR_TORPEDOS
+		self.Docked = False
 		self.Position = pos
 	
 	def ReceivedDamage(damage):
