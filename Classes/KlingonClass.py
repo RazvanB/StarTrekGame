@@ -9,7 +9,7 @@ class Klingon(object):
 	ENG_HIGH_LIMIT = 100
 	SYMBOL = 'K'
 	
-	def __init__(self, Energy, shield, pos):
+	def __init__(self, energy, shield, pos):
 		self.Energy = energy
 		self.Shield = shield
 		self.Position = pos
@@ -37,3 +37,10 @@ class Klingon(object):
 		#if the ship has enough energy counter-attack
 		if self.Energy >= ENG_HIGH_LIMIT:
 			return  randint(0, 10) * 0.1 * self.Energy
+
+	def Print(self):
+		'''For debugging'''
+		
+		print 'Klingon ship: [energy = %r, shield = %r' %(self.Energy, self.Shield), 
+		print 'pos = ', 
+		self.Position.Print()
