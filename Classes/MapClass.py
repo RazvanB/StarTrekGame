@@ -1,3 +1,5 @@
+from QuadrantClass import Quadrant
+
 class Map(object):
 	
 	QuadrantNames = [
@@ -11,9 +13,9 @@ class Map(object):
 		['POLLUX I', 'POLLUX II', 'POLLUX III', 'POLLUX IV', 'SPICA I', 'SPICA II', 'SPICA III', 'SPICA IV']
 	]
 	
-	def __init__(self, quadrants):
-		self.Quadrants = quadrants
-				
-		for i in range(0, 8):
-			for j in range(0, 8):
+	def __init__(self):
+		self.Quadrants = [[Quadrant(0,0,0) for j in range(8)] for i in range(8)]
+		
+		for i in range(8):
+			for j in range(8):
 				self.Quadrants[i][j].Name = self.QuadrantNames[i][j]

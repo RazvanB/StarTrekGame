@@ -1,6 +1,8 @@
 from Classes.UtilClass import *
 from random import randint
 from Classes.PositionClass import Position
+from Classes.MapClass import Map
+from Classes.QuadrantClass import Quadrant
 
 #test status method
 Util.displayStatusCommand(1,2,3,4,5,6,7,8,9,10)
@@ -39,3 +41,6 @@ for i in range(17):
 	p = Position(qx, qy, sx, sy)
 	p.Print()
 
+#test creation map
+m = Map()
+print (m.Quadrants[1][1]).Sectors[6][6]
