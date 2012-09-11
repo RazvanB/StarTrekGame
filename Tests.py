@@ -27,20 +27,9 @@ l = [[' 000 ',' 001 ',' 010 ',' 011 ',' 100 ','(101)',' 110 ',' 111 '],
 Util.displayRecordCommand(l)
 print ""
 
-#test distribution on map
-for i in range(17):
-	ax = randint(0, 64)
-	ay = randint(0, 64)
-	
-	qx = ax / 8
-	sx = ax % 8
-	
-	qy = ay / 8
-	sy = ay % 8
-	
-	p = Position(qx, qy, sx, sy)
-	p.Print()
-
 #test creation map
 m = Map()
-print (m.Quadrants[1][1]).Sectors[6][6]
+print 'Q[1,1] Name = %r' %(m.Quadrants[1][1].Name)
+
+#test print sectors
+m.Quadrants[1][1].PrintSectors()
