@@ -27,6 +27,10 @@ l = [[' 000 ',' 001 ',' 010 ',' 011 ',' 100 ','(101)',' 110 ',' 111 '],
 Util.displayRecordCommand(l)
 print ""
 
+#test quadrant class
+q = Quadrant()
+print q.NoOfStars
+
 #test creation map
 m = Map()
 print 'Q[1,1] Name = %r' %(m.Quadrants[1][1].Name)

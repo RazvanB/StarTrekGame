@@ -9,16 +9,16 @@ class Quadrant(object):
 		return self._isEnterprise
 	
 	@property
-	def getNoOfStars(self):
-		return len(self.Stars)
+	def NoOfStars(self):
+		return self.Stars.__len__()
 		
 	@property
-	def getNoOfKlingons(self):
-		return len(Klingons)
+	def NoOfKlingons(self):
+		return self.Klingons.__len__()
 		
 	@property
-	def getNoOfStarBases(self):
-		return len(self.StarBases)
+	def NoOfStarBases(self):
+		return self.StarBases.__len__()
 	
 	def __init__(self):
 		''' Create an empty quadrant '''
@@ -34,9 +34,9 @@ class Quadrant(object):
 		''' Prints all informations about the current quadrant (#KB*)'''
 		
 		if self.IsEnterprise:
-			print "(%d%d%d)" %(self.Klingons, self.StarBases, self.Stars)
+			print "(%d%d%d)" %(self.Klingons.__len__(), self.StarBases__len__(), self.Stars__len__())
 		else:
-			print " %d%d%d " %(self.Klingons, self.StarBases, self.Stars)
+			print " %d%d%d " %(self.Klingons.__len__(), self.StarBases.__len__(), self.Stars.__len__())
 			
 	def PrintSectors(self):
 		''' Draw the sectors of the current quadrant '''

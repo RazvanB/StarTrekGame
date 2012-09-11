@@ -1,4 +1,6 @@
 from string import lower
+from random import randint
+from PositionClass import Position
 
 class Util(object):
 	'''Helper class'''
@@ -7,7 +9,20 @@ class Util(object):
 	def prompt():
 		return raw_input('>')
 
+	@staticmethod
+	def getRandomPosition():
+		''' Returns a random position on the map '''
+		
+		ax = randint(0, 63)
+		ay = randint(0, 63)
 			
+		qx = ax / 8
+		sx = ax % 8
+		
+		qy = ay / 8
+		sy = ay % 8
+		
+		return Position(qx, qy, sx, sy)
 	
 	@staticmethod
 	def asciiArt():
@@ -28,7 +43,6 @@ class Util(object):
 	@staticmethod
 	def displayIntroduction():
 		''' Displays an introductory message '''
-
 
 	@staticmethod
 	def displayOrders(klingons, finalStarDate, days, starbases):
