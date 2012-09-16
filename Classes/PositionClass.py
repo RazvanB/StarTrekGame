@@ -8,6 +8,14 @@ class Position(object):
 		self.AbsoluteX = 8 * qx + sx
 		self.AbsoluteY = 8 * qy + sy
 		
+	def GetQuadrant(self):
+		'''Returns the quadrant coordinates as string'''
+		return '[%d,%d]' %(self.QuadrantX, self.QuadrantY)
+		
+	def GetSector(self):
+		'''Returns the quadrant coordinates as string'''
+		return '[%d,%d]' %(self.SectorX, self.SectorY)
+	
 	def Print(self):
 		'''For debugging'''
 		print 'Q[%r,%r] - S[%r,%r]' %(self.QuadrantX, self.QuadrantY, self.SectorX, self.SectorY)

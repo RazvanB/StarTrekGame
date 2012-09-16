@@ -30,7 +30,7 @@ class Quadrant(object):
 		self.Name = 'Unknown'
 		self.Sectors = [s[:] for s in [[' ']*8]*8]
 		
-	def Print(self):
+	def GetInformations(self):
 		''' Prints all informations about the current quadrant (#KB*)'''
 		
 		if self.IsEnterprise:
@@ -40,5 +40,15 @@ class Quadrant(object):
 			
 	def PrintSectors(self):
 		''' Draw the sectors of the current quadrant '''
+		print '\n'.join(['| '.join(r) for r in self.Sectors])
 		
-		print '\n'.join([''.join(r) for r in self.Sectors])
+	def GetLine(self, line):
+		''' Returns a string representation for the given line.'''
+		
+		strLine = '|'
+		
+		for i in range(8):
+			strLine += ' ' + self.Sectors[line][i] + ' '
+		strLine += "|"
+		
+		return strLine

@@ -22,5 +22,5 @@ class Enterprise(object):
 		if self.Shield <= 0.0:
 			Utils.dead(SYMBOL)
 			
-		return 0
+		return 0		
 		

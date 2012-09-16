@@ -80,3 +80,31 @@ class Map(object):
 				self.Quadrants[qx][qy].Sectors[sx][sy] = StarBase.SYMBOL
 				self.Quadrants[qx][qy].StarBases.append(StarBase(pos))
 				starbases -= 1
+
+	def placeEnterprise(self):
+		'''Place The Enterprise on the map and returns it´s position'''
+		
+		while True:
+			pos = Util.getRandomPosition()
+			qx = pos.QuadrantX
+			qy = pos.QuadrantY
+			sx = pos.SectorX
+			sy = pos.SectorY
+			
+			if self.Quadrants[qx][qy].Sectors[sx][sy] == ' ':
+				self.Quadrants[qx][qy].Sectors[sx][sy] = Enterprise.SYMBOL
+				sel.Quadrants[qx][qy].IsEnterprise = True
+				break
+				
+		return pos
+				
+	def getInformations(x, y):
+		''' Returns informations about the given quadrant '''
+		
+		if x < 0 || x > 7 :
+			return ' 000 '
+			
+		if y < 0 || y > 7:
+			return ' 000 '
+			
+		return self.Quadrants[x][y].GetInformations()
