@@ -9,6 +9,10 @@ class Util(object):
 	@staticmethod
 	def clear():
 		system('cls')
+		
+	@staticmethod
+	def resizeConsole(w, h):
+		system('mode %d,%d' %(w,h))
 	
 	@staticmethod
 	def prompt():

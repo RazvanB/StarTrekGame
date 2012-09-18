@@ -7,6 +7,10 @@ class Quadrant(object):
 	def IsEnterprise(self):
 		''' Returns if in the current quadrant is the Enterprise present '''
 		return self._isEnterprise
+		
+	@IsEnterprise.setter
+	def IsEnterprise(self, value):
+		self._isEnterprise = value
 	
 	@property
 	def NoOfStars(self):
@@ -34,7 +38,7 @@ class Quadrant(object):
 		''' Prints all informations about the current quadrant (#KB*)'''
 		
 		if self.IsEnterprise:
-			print "(%d%d%d)" %(self.Klingons.__len__(), self.StarBases__len__(), self.Stars__len__())
+			print "(%d%d%d)" %(self.Klingons.__len__(), self.StarBases.__len__(), self.Stars.__len__())
 		else:
 			print " %d%d%d " %(self.Klingons.__len__(), self.StarBases.__len__(), self.Stars.__len__())
 			

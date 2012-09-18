@@ -5,6 +5,7 @@ from UtilClass import Util
 from StarClass import Star
 from StarBaseClass import StarBase
 from KlingonClass import Klingon
+from EnterpriseClass import Enterprise
 
 class Map(object):
 	
@@ -82,7 +83,7 @@ class Map(object):
 				starbases -= 1
 
 	def placeEnterprise(self):
-		'''Place The Enterprise on the map and returns it´s position'''
+		'''Place The Enterprise on the map and returns it's position'''
 		
 		while True:
 			pos = Util.getRandomPosition()
@@ -93,18 +94,19 @@ class Map(object):
 			
 			if self.Quadrants[qx][qy].Sectors[sx][sy] == ' ':
 				self.Quadrants[qx][qy].Sectors[sx][sy] = Enterprise.SYMBOL
-				sel.Quadrants[qx][qy].IsEnterprise = True
+				self.Quadrants[qx][qy].IsEnterprise = True
 				break
 				
 		return pos
 				
-	def getInformations(x, y):
+	def getInformations(self, x, y):
 		''' Returns informations about the given quadrant '''
 		
-		if x < 0 || x > 7 :
+		if x < 0 or x > 7 :
 			return ' 000 '
 			
-		if y < 0 || y > 7:
+		if y < 0 or y > 7:
 			return ' 000 '
 			
 		return self.Quadrants[x][y].GetInformations()
+

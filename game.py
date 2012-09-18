@@ -2,6 +2,7 @@ from Classes.UtilClass import *
 from Classes.HelpClass import Help
 from Classes.KlingonClass import Klingon
 from Classes.PositionClass import Position
+from Classes.EnterpriseClass import Enterprise
 from Classes.MapClass import Map
 from string import lower
 from random import randint
@@ -10,7 +11,8 @@ class Game(object):
 	
 	def __init__(self):
 		''' some game initialisations'''
-		initGame()
+		Util.resizeConsole(120, 45)
+		self.initGame()
 		
 	def initGame(self):
 		'''Prepare the game and the map'''
@@ -20,7 +22,7 @@ class Game(object):
 		self.TotalStarBases = 2 + randint(0, 4)
 		self.CurrentCondition = 'GREEN'
 		
-		generateMap()
+		self.generateMap()
 		
 	def generateMap(self):
 		'''Place objects on the federaion map'''
@@ -30,7 +32,9 @@ class Game(object):
 		self.map.placeStarBases(self.TotalStarBases)
 		pos = self.map.placeEnterprise()
 		
-		self.TheEnterprise = Enterprise(
+		#set the quadrant where the Enterprise is located
+		self.EnterpriseQuadrant = self.map.Quadrants[pos.QuadrantX][pos.QuadrantY]
+		self.TheEnterprise = Enterprise(pos)
 		
 	def start(self):
 		'''The entry method of the game'''
@@ -44,15 +48,13 @@ class Game(object):
 		if answer != None and (lower(answer) == 'y' or lower(answer) == 'yes'):
 			Help.displayHelp()
 		else:
-			Util.Clear()
+			Util.clear()
 		
 		Util.displayOrders(self.TotalKlingons, self.CurrentStarDate + self.RemainingStarDays, self.RemainingStarDays, self.TotalStarBases)
 		answer = Util.prompt()
 		self.isRestart(answer)
 				
 		self.displayAllRangeScan("")
-		
-			
 	
 	def isRestart(self, answer):
 		if(lower(answer) == 'xxx'):
@@ -68,7 +70,7 @@ class Game(object):
 		CST_GAP_INFO_LR = 2
 		CST_SHORT_RANGE_MAP = 24
 		
-		max_len_Info = 18 + quadrant.Name
+		max_len_Info = 18 + len(self.EnterpriseQuadrant.Name)
 		
 		firstLineGap = CST_SHORT_RANGE_MAP + CST_GAP_SR_INFO + max_len_Info + CST_GAP_INFO_LR
 		
@@ -99,14 +101,14 @@ class Game(object):
 	def getEnterpriseInformation(self, prop):
 		'''Get a string representation for a propery. Used to display the short range scan '''
 		
-		max_len_Info = 18 + self.EnterpriseQuadrant.Name # len(Photon Torpedoes: ) = 18
+		max_len_Info = 18 + len(self.EnterpriseQuadrant.Name) # len(Photon Torpedoes: ) = 18
 		
 		if prop == 1: # quadrant's name
 			return ' ' * (max_len_Info - len('Region: %s' %self.EnterpriseQuadrant.Name)) + 'Region: %s' %self.EnterpriseQuadrant.Name
 		elif prop == 2: #quadrant coordinates
-			return ' ' * (max_len_Info - len('Quadrant: %s' %self.enterprise.Position.GetQuadrant() + 'Quadrant: [%d, %d]' %self.enterprise.Position%enterprise.Position.GetQuadrant()
+			return ' ' * (max_len_Info - len('Quadrant: %s' %self.TheEnterprise.Position.GetQuadrant())) + 'Quadrant: %s' %self.TheEnterprise.Position.GetQuadrant()
 		elif prop == 3: #sector coordinates
-			return ' ' * (max_len_Info - len('Sector: %s' %self.enterprise.Position.GetSector() + 'Sector: %s' %self.enterprise.Position.GetSector()
+			return ' ' * (max_len_Info - len('Sector: %s' %self.TheEnterprise.Position.GetSector())) + 'Sector: %s' %self.TheEnterprise.Position.GetSector()
 		elif prop == 4: #Current Stardate
 			return ' ' * (max_len_Info - len('Stardate: %.2f' %self.CurrentStarDate)) + 'Stardate: %.2f' %self.CurrentStarDate
 		elif prop == 5: #Time remaining
@@ -114,32 +116,32 @@ class Game(object):
 		elif prop == 6: #Conditions
 			return ' ' * (max_len_Info - len('Condition: %s' %self.CurrentCondition)) + 'Condition: %s' %self.CurrentCondition
 		elif prop == 7: #Energy
-			return ' ' * (max_len_Info - len('Energy: %d' %self.enterprise.Energy)) + 'Energy: %d' %self.enterprise.Energy
+			return ' ' * (max_len_Info - len('Energy: %d' %self.TheEnterprise.Energy)) + 'Energy: %d' %self.TheEnterprise.Energy
 		elif prop == 8: #Shield
-			return ' ' * (max_len_Info - len('Shield: %d' %self.enterprise.Shield)) + 'Shield: %d' %self.enterprise.Shield
+			return ' ' * (max_len_Info - len('Shield: %d' %self.TheEnterprise.Shield)) + 'Shield: %d' %self.TheEnterprise.Shield
 		elif prop == 9: #torpedoes
-			return ' ' * (max_len_Info - len('Photon Torpedoes: %d' %self.enterprise.Torpedos)) + 'Photon Torpedoes: %d' %self.enterprise.Torpedos
+			return ' ' * (max_len_Info - len('Photon Torpedoes: %d' %self.TheEnterprise.Torpedos)) + 'Photon Torpedoes: %d' %self.TheEnterprise.Torpedos
 		elif prop == 10: #enterprise is docked
-			return ' ' * (max_len_Info - len('Docked: %d' %self.enterprise.Docked)) + 'Docked: %d' %self.enterprise.Docked
+			return ' ' * (max_len_Info - len('Docked: %d' %self.TheEnterprise.Docked)) + 'Docked: %d' %self.TheEnterprise.Docked
 			
 	def getLongRangeScan(self, line):
 		'''Get a string representation for the long range scan'''
 		
-		x = self.Enterprise.Position.QuadrantX
-		y = self.Enterprise.Position.QuadrantY
+		x = self.TheEnterprise.Position.QuadrantX
+		y = self.TheEnterprise.Position.QuadrantY
 		
 		if line == 1:
 			return '-' * 19
 		elif line == 2:
-			return '|' + map.GetInformations(x - 1, y - 1) + '|' + map.GetInformations(x - 1, y) + '|' + map.GetInformations(x - 1, y + 1) + '|'
+			return '|%s|%s|%s|' %(self.map.getInformations(x - 1, y - 1), self.map.getInformations(x - 1, y), self.map.getInformations(x - 1, y + 1))
 		elif line == 3:
 			return '-' * 19
 		elif line == 4:
-			return '|' + map.GetInformations(x, y - 1) + '|' + map.GetInformations(x, y) + '|' + map.GetInformations(x, y + 1) + '|'
+			return '|%s|%s|%s|' %(self.map.getInformations(x, y - 1), self.map.getInformations(x, y), self.map.getInformations(x, y + 1))
 		elif line == 5:
 			return '-' * 19
 		elif line == 6:
-			return '|' + map.GetInformations(x + 1, y - 1) + '|' + map.GetInformations(x + 1, y) + '|' + map.GetInformations(x + 1, y + 1) + '|'
+			return '|%s|%s|%s|' %(self.map.getInformations(x + 1, y - 1), self.map.getInformations(x + 1, y), self.map.getInformations(x + 1, y + 1))
 		elif line == 7:
 			return '-' * 19
 		elif line == 8:

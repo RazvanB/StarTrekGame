@@ -4,12 +4,13 @@ class Enterprise(object):
 	#constants
 	SYMBOL = 'E'
 	NR_TORPEDOS = 10
+	ENERGY = 4000
 	
 	
-	def __init__(self, energy, pos):
-		self.Energy = energy
+	def __init__(self, pos):
+		self.Energy = self.ENERGY
 		self.Shield = 0.0
-		self.Torpedos = NR_TORPEDOS
+		self.Torpedos = self.NR_TORPEDOS
 		self.Docked = False
 		self.Position = pos
 	

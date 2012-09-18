@@ -35,6 +35,7 @@ print q.NoOfStars
 #test creation map
 m = Map()
 print 'Q[1,1] Name = %r' %(m.Quadrants[1][1].Name)
+print '|%s' %m.getInformations(1,1)
 
 #test print short range scan
 m.Quadrants[1][1].PrintSectors()
