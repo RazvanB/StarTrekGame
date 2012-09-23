@@ -1,5 +1,3 @@
-import string
-
 class Quadrant(object):
 	''' Class used to store informations about a quadrant '''
 	
@@ -38,9 +36,9 @@ class Quadrant(object):
 		''' Prints all informations about the current quadrant (#KB*)'''
 		
 		if self.IsEnterprise:
-			print "(%d%d%d)" %(self.Klingons.__len__(), self.StarBases.__len__(), self.Stars.__len__())
+			return "(%d%d%d)" %(self.Klingons.__len__(), self.StarBases.__len__(), self.Stars.__len__())
 		else:
-			print " %d%d%d " %(self.Klingons.__len__(), self.StarBases.__len__(), self.Stars.__len__())
+			return " %d%d%d " %(self.Klingons.__len__(), self.StarBases.__len__(), self.Stars.__len__())
 			
 	def PrintSectors(self):
 		''' Draw the sectors of the current quadrant '''

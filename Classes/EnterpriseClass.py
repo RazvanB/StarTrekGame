@@ -1,3 +1,5 @@
+from UtilClass import Util
+
 class Enterprise(object):
 	'''The enterprise herself.'''
 	
@@ -14,14 +16,14 @@ class Enterprise(object):
 		self.Docked = False
 		self.Position = pos
 	
-	def ReceivedDamage(damage):
+	def ReceivedDamage(self, damage):
 		'''Called when the ship was hit '''
 		
 		self.Shield -= damage
 		
 		#the ship is destroyed
-		if self.Shield <= 0.0:
-			Utils.dead(SYMBOL)
+		#if self.Shield <= 0.0:
+		#	Util.dead(self.SYMBOL)
 			
 		return 0		
 		

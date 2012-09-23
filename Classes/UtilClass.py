@@ -1,4 +1,3 @@
-from string import lower
 from random import randint
 from PositionClass import Position
 from os import system
@@ -98,6 +97,18 @@ _\ \| |_| (_| || |     / /   | |  |  __/|   <
 -
  HIT 'RETURN' WHEN YOU'RE READY TO ASSUME COMMAND ---		
 """ %(klingons, finalStarDate, days, starbases)
+
+	@staticmethod
+	def displayCommands():
+		print """
+--- Commands -----------------
+nav = Navigation
+pha = Phaser Control
+tor = Photon Torpedo Control
+she = Shield Control
+com = Access Computer
+xxx = Restart
+Enter command:"""
 
 	@staticmethod
 	def displayNavigationCommand(param):

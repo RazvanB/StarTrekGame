@@ -1,11 +1,9 @@
 from Classes.UtilClass import *
+from string import lower
 from Classes.HelpClass import Help
-from Classes.KlingonClass import Klingon
-from Classes.PositionClass import Position
 from Classes.EnterpriseClass import Enterprise
 from Classes.MapClass import Map
-from string import lower
-from random import randint
+from Classes.QuadrantClass import Quadrant
 
 class Game(object):
 	
@@ -51,13 +49,42 @@ class Game(object):
 			Util.clear()
 		
 		Util.displayOrders(self.TotalKlingons, self.CurrentStarDate + self.RemainingStarDays, self.RemainingStarDays, self.TotalStarBases)
+		
 		answer = Util.prompt()
 		self.isRestart(answer)
-				
+			
 		self.displayAllRangeScan("")
+		self.displayCondition()
+		Util.displayCommands()
+		
+		while(True):
+			self.command()
+	
+	def displayCondition(self):
+		''' Display the condition of the Enterprise '''
+		
+		print '-'
+		if self.EnterpriseQuadrant.NoOfKlingons > 0 and  self.TheEnterprise.Shield == 0:
+			self.CurrentCondition = 'RED'
+			print 'Condition %s: %s' %(self.CurrentCondition, 'Klingon ship detected')
+			print 'Warning: Shields are down'
+		elif self.EnterpriseQuadrant.NoOfKlingons > 0 and self.TheEnterprise.Shield > 0:
+			self.CurrentCondition = 'RED'
+			print 'Condition %s: %s' %(self.CurrentCondition, 'Klingon ship detected')
+		elif self.map.getBlockedStarbase() != None:
+			pos = self.map.getBlockedStarbase()
+			self.CurrentCondition = 'RED'
+			print 'Condition %s: %s' %(self.CurrentCondition, 'Starbase K-%d%d is blocked by Klingons' %(pos.QuadrantX, pos.QuadrantY))
+		elif self.TheEnterprise.Energy < 300:
+			self.CurrentCondition = 'YELLOW'
+			print 'Condition %s: %s' %(self.CurrentCondition, 'Low energy level, return to starbase.')
+		else:
+			self.CurrentCondition = 'GREEN'
+			print 'Condition %s": %s' %(self.CurrentCondition, 'This quadrant is clear.')
+		print '-'
 	
 	def isRestart(self, answer):
-		if(lower(answer) == 'xxx'):
+		if lower(answer) == 'xxx':
 			Util.clear()
 			self.initGame()
 			self.start()
@@ -65,19 +92,20 @@ class Game(object):
 	def displayAllRangeScan(self, message):
 		''' Display the current quadrant in which is the Enterprise '''
 		
-		CST_SHORT_RANGE = 16
 		CST_GAP_SR_INFO = 3
 		CST_GAP_INFO_LR = 2
-		CST_SHORT_RANGE_MAP = 24
+		CST_SHORT_RANGE_MAP = 26
 		
-		max_len_Info = 18 + len(self.EnterpriseQuadrant.Name)
+		max_len_Info = 20 + len(self.EnterpriseQuadrant.Name)
 		
-		firstLineGap = CST_SHORT_RANGE_MAP + CST_GAP_SR_INFO + max_len_Info + CST_GAP_INFO_LR
+		
 		
 		if len(message) > 0:
-			print "STAR TREK - %message" %message
+			print "STAR TREK - %s" %message
 		else:
 			print "STAR TREK"
+			
+		firstLineGap = CST_SHORT_RANGE_MAP + CST_GAP_SR_INFO + max_len_Info + CST_GAP_INFO_LR - len('SHORT RANGE SCAN')
 
 		print 'SHORT RANGE SCAN' + ' ' * firstLineGap + 'LONG RANGE SCAN'
 		
@@ -92,9 +120,9 @@ class Game(object):
 		''' Get a string representation for the short range scan '''
 		
 		if line == 1:
-			return '-1--2--3--4--5--6--7--8-'
+			return ' -1--2--3--4--5--6--7--8- '
 		elif line == 10:
-			return '-' * 24
+			return ' ' + '-' * 24 + ' '
 		else:
 			return self.EnterpriseQuadrant.GetLine(line - 2)
 			
@@ -122,7 +150,7 @@ class Game(object):
 		elif prop == 9: #torpedoes
 			return ' ' * (max_len_Info - len('Photon Torpedoes: %d' %self.TheEnterprise.Torpedos)) + 'Photon Torpedoes: %d' %self.TheEnterprise.Torpedos
 		elif prop == 10: #enterprise is docked
-			return ' ' * (max_len_Info - len('Docked: %d' %self.TheEnterprise.Docked)) + 'Docked: %d' %self.TheEnterprise.Docked
+			return ' ' * (max_len_Info - len('Docked: %s' %self.TheEnterprise.Docked)) + 'Docked: %s' %self.TheEnterprise.Docked
 			
 	def getLongRangeScan(self, line):
 		'''Get a string representation for the long range scan'''
@@ -151,6 +179,47 @@ class Game(object):
 		elif line == 10:
 			return "#KLINGONS, #STARBASES, #STARS"
 
-	
+	def command(self):
+		answer = Util.prompt()
+		self.isRestart(answer)
+			
+		if lower(answer) == 'nav':
+			self.navigationCommand()
+		elif lower(answer) == 'pha':
+			self.pahserCommand()
+		elif lower(answer) == 'tor':
+			self.torpedoCommand()
+		elif lower(answer) == 'she':
+			self.shieldControl()
+		elif lower(answer) == 'com':
+			self.computerCommand()
+			
+	def navigationCommand(self):
+		'''Command to move the Enterprise '''
+		
+		Util.displayNavigationCommand(NavParam.COURSE)
+		
+		try:
+			course = float(Util.prompt())	
+			if course < 1.0 or course > 9.0:
+				print 'Invalid course.'
+				return
+		except ValueError: 
+			print 'Invalid course.'
+			return
+			
+		Util.displayNavigationCommand(NavParam.WARP_FACTOR)
+		
+		try:
+			warp = float(Util.prompt())	
+			if warp < 1.0 or warp > 9.0:
+				print 'Invalid warp factor.'
+				return
+		except ValueError: 
+			print 'Invalid warp factor.'
+			return
+		
+		
+			
 g = Game()
 g.start()

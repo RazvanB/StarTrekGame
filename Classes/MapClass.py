@@ -1,5 +1,4 @@
 from sys import maxint
-from random import randint
 from QuadrantClass import Quadrant
 from UtilClass import Util
 from StarClass import Star
@@ -109,4 +108,17 @@ class Map(object):
 			return ' 000 '
 			
 		return self.Quadrants[x][y].GetInformations()
+	
+	def getBlockedStarbase(self):
+		'''Returns the position of the starbase blocked by klingon ships'''
+		
+		for qx in range(0, 8):
+			for qy in  range(0, 8):
+				if self.Quadrants[qx][qy].IsEnterprise == False \
+					and self.Quadrants[qx][qy].NoOfKlingons > 0 \
+					and self.Quadrants[qx][qy].NoOfStarBases > 0:
+					return self.Quadrants[qx][qy].StarBases[0].Position
+		
+		return None
+					
 
