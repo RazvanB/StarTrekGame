@@ -96,16 +96,14 @@ class Game(object):
 		CST_GAP_INFO_LR = 2
 		CST_SHORT_RANGE_MAP = 26
 		
-		max_len_Info = 20 + len(self.EnterpriseQuadrant.Name)
-		
-		
+		max_len_FirstInfo = 20 + len(self.EnterpriseQuadrant.Name)
 		
 		if len(message) > 0:
 			print "STAR TREK - %s" %message
 		else:
 			print "STAR TREK"
 			
-		firstLineGap = CST_SHORT_RANGE_MAP + CST_GAP_SR_INFO + max_len_Info + CST_GAP_INFO_LR - len('SHORT RANGE SCAN')
+		firstLineGap = CST_SHORT_RANGE_MAP + CST_GAP_SR_INFO + max_len_FirstInfo + CST_GAP_INFO_LR - len('SHORT RANGE SCAN')
 
 		print 'SHORT RANGE SCAN' + ' ' * firstLineGap + 'LONG RANGE SCAN'
 		
@@ -129,28 +127,29 @@ class Game(object):
 	def getEnterpriseInformation(self, prop):
 		'''Get a string representation for a propery. Used to display the short range scan '''
 		
-		max_len_Info = 18 + len(self.EnterpriseQuadrant.Name) # len(Photon Torpedoes: ) = 18
+		max_left_gap = len('Photon Torpedoes:' )
+		max_right_gap = self.EnterpriseQuadrant.Name.__len__()
 		
 		if prop == 1: # quadrant's name
-			return ' ' * (max_len_Info - len('Region: %s' %self.EnterpriseQuadrant.Name)) + 'Region: %s' %self.EnterpriseQuadrant.Name
+			return ' ' * (max_left_gap - len('Region:')) + 'Region: %s' %self.EnterpriseQuadrant.Name + ' ' * (max_right_gap - len(self.EnterpriseQuadrant.Name))
 		elif prop == 2: #quadrant coordinates
-			return ' ' * (max_len_Info - len('Quadrant: %s' %self.TheEnterprise.Position.GetQuadrant())) + 'Quadrant: %s' %self.TheEnterprise.Position.GetQuadrant()
+			return ' ' * (max_left_gap - len('Quadrant:')) + 'Quadrant: %s' %self.TheEnterprise.Position.GetQuadrant() + ' ' * (max_right_gap - len(self.TheEnterprise.Position.GetQuadrant())) 
 		elif prop == 3: #sector coordinates
-			return ' ' * (max_len_Info - len('Sector: %s' %self.TheEnterprise.Position.GetSector())) + 'Sector: %s' %self.TheEnterprise.Position.GetSector()
+			return ' ' * (max_left_gap - len('Sector:')) + 'Sector: %s' %self.TheEnterprise.Position.GetSector() + ' ' * (max_right_gap - len(self.TheEnterprise.Position.GetSector()))
 		elif prop == 4: #Current Stardate
-			return ' ' * (max_len_Info - len('Stardate: %.2f' %self.CurrentStarDate)) + 'Stardate: %.2f' %self.CurrentStarDate
+			return ' ' * (max_left_gap - len('Stardate:')) + 'Stardate: %.2f' %self.CurrentStarDate + ' ' * (max_right_gap - len('%.2f' %self.CurrentStarDate))
 		elif prop == 5: #Time remaining
-			return ' ' * (max_len_Info - len('Time remaining: %d' %self.RemainingStarDays)) + 'Time remaining: %d' %self.RemainingStarDays
+			return ' ' * (max_left_gap - len('Time remaining:')) + 'Time remaining: %d' %self.RemainingStarDays + ' ' * (max_right_gap - len('%d' %self.RemainingStarDays))
 		elif prop == 6: #Conditions
-			return ' ' * (max_len_Info - len('Condition: %s' %self.CurrentCondition)) + 'Condition: %s' %self.CurrentCondition
+			return ' ' * (max_left_gap - len('Condition:')) + 'Condition: %s' %self.CurrentCondition + ' ' * (max_right_gap - len(self.CurrentCondition))
 		elif prop == 7: #Energy
-			return ' ' * (max_len_Info - len('Energy: %d' %self.TheEnterprise.Energy)) + 'Energy: %d' %self.TheEnterprise.Energy
+			return ' ' * (max_left_gap - len('Energy:')) + 'Energy: %d' %self.TheEnterprise.Energy + ' ' * (max_right_gap - len('%d' %self.TheEnterprise.Energy))
 		elif prop == 8: #Shield
-			return ' ' * (max_len_Info - len('Shield: %d' %self.TheEnterprise.Shield)) + 'Shield: %d' %self.TheEnterprise.Shield
+			return ' ' * (max_left_gap - len('Shield:')) + 'Shield: %d' %self.TheEnterprise.Shield + ' ' * (max_right_gap - len('%d' %self.TheEnterprise.Shield))
 		elif prop == 9: #torpedoes
-			return ' ' * (max_len_Info - len('Photon Torpedoes: %d' %self.TheEnterprise.Torpedos)) + 'Photon Torpedoes: %d' %self.TheEnterprise.Torpedos
+			return ' ' * (max_left_gap - len('Photon Torpedoes:')) + 'Photon Torpedoes: %d' %self.TheEnterprise.Torpedos + ' ' * (max_right_gap - len('%d' %self.TheEnterprise.Torpedos))
 		elif prop == 10: #enterprise is docked
-			return ' ' * (max_len_Info - len('Docked: %s' %self.TheEnterprise.Docked)) + 'Docked: %s' %self.TheEnterprise.Docked
+			return ' ' * (max_left_gap - len('Docked:')) + 'Docked: %s' %self.TheEnterprise.Docked + ' ' * (max_right_gap - len('%s' %self.TheEnterprise.Docked))
 			
 	def getLongRangeScan(self, line):
 		'''Get a string representation for the long range scan'''
