@@ -4,6 +4,7 @@ from Classes.HelpClass import Help
 from Classes.EnterpriseClass import Enterprise
 from Classes.MapClass import Map
 from Classes.QuadrantClass import Quadrant
+import math
 
 class Game(object):
 	
@@ -23,7 +24,7 @@ class Game(object):
 		self.generateMap()
 		
 	def generateMap(self):
-		'''Place objects on the federaion map'''
+		'''Place objects on the federation map'''
 		
 		self.map = Map()
 		self.map.placeKlingons(self.TotalKlingons)
@@ -96,14 +97,16 @@ class Game(object):
 		CST_GAP_INFO_LR = 2
 		CST_SHORT_RANGE_MAP = 26
 		
-		max_len_FirstInfo = 20 + len(self.EnterpriseQuadrant.Name)
+		
+		Util.clear()
+		gap_len_FirstInfo = len(self.getEnterpriseInformation(1))
 		
 		if len(message) > 0:
 			print "STAR TREK - %s" %message
 		else:
 			print "STAR TREK"
 			
-		firstLineGap = CST_SHORT_RANGE_MAP + CST_GAP_SR_INFO + max_len_FirstInfo + CST_GAP_INFO_LR - len('SHORT RANGE SCAN')
+		firstLineGap = CST_SHORT_RANGE_MAP - len('SHORT RANGE SCAN') + CST_GAP_SR_INFO + gap_len_FirstInfo + 3 * CST_GAP_INFO_LR 
 
 		print 'SHORT RANGE SCAN' + ' ' * firstLineGap + 'LONG RANGE SCAN'
 		
@@ -125,7 +128,7 @@ class Game(object):
 			return self.EnterpriseQuadrant.GetLine(line - 2)
 			
 	def getEnterpriseInformation(self, prop):
-		'''Get a string representation for a propery. Used to display the short range scan '''
+		''' Get a string representation for a property. Used to display the short range scan '''
 		
 		max_left_gap = len('Photon Torpedoes:' )
 		max_right_gap = self.EnterpriseQuadrant.Name.__len__()
@@ -199,8 +202,8 @@ class Game(object):
 		Util.displayNavigationCommand(NavParam.COURSE)
 		
 		try:
-			course = float(Util.prompt())	
-			if course < 1.0 or course > 9.0:
+			course = int(Util.prompt())	
+			if course < 1 or course > 9:
 				print 'Invalid course.'
 				return
 		except ValueError: 
@@ -211,14 +214,22 @@ class Game(object):
 		
 		try:
 			warp = float(Util.prompt())	
-			if warp < 1.0 or warp > 9.0:
+			if warp < 0.1 or warp > 8.0:
 				print 'Invalid warp factor.'
 				return
 		except ValueError: 
 			print 'Invalid warp factor.'
 			return
 		
-		
+		newPos = self.map.moveEnterprise(course, warp, self.TheEnterprise.Position)
+		if newPos == None: 
+			print 'Error! the path is blocked'
+		else:
+			self.EnterpriseQuadrant = self.map.Quadrants[newPos.QuadrantX][newPos.QuadrantY]
+			Util.clear()
+			self.displayAllRangeScan('Warp engine engaged')
+			self.displayCondition()
+			Util.displayCommands()
 			
 g = Game()
 g.start()

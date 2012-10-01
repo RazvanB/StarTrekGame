@@ -46,3 +46,5 @@ print '---'
 max_len_Info = 30
 
 print ' ' * (max_len_Info - len('Region: %s' %m.Quadrants[1][1].Name)) + 'Region: %s' %m.Quadrants[1][1].Name
+
+#test navigation
