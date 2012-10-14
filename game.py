@@ -221,10 +221,11 @@ class Game(object):
 			print 'Invalid warp factor.'
 			return
 		
-		newPos = self.map.moveEnterprise(course, warp, self.TheEnterprise.Position)
-		if newPos == None: 
-			print 'Error! the path is blocked'
+		(canMove, newPos) = self.map.moveEnterprise(course, warp, self.TheEnterprise.Position)
+		if not canMove: 
+			self.displayAllRangeScan('Error! the path is blocked')
 		else:
+			self.TheEnterprise.Position = newPos 
 			self.EnterpriseQuadrant = self.map.Quadrants[newPos.QuadrantX][newPos.QuadrantY]
 			Util.clear()
 			self.displayAllRangeScan('Warp engine engaged')
