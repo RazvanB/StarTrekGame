@@ -1,4 +1,3 @@
-from UtilClass import Util
 from random import randint
 
 class Star(object):
@@ -14,14 +13,14 @@ class Star(object):
 		self.BecomesNova = becomesNova;
 		self.Position = pos
 		
-	def ReceivedDamage(damage):
-		self.Mass -= DAMAGE_FACTOR * damage
+	def ReceivedDamage(self, damage):
+		self.Mass -= self.DAMAGE_FACTOR * damage
 		
 		if self.Mass <= 0:
 			#todo: delete star from the sector
 			
 			if self.BecomesNova:
-				return random(0, 10) * 0.1 * INFLICT_DAMAGE 
+				return randint(0, 10) * 0.1 * self.INFLICT_DAMAGE 
 			else:
 				return 0
 		

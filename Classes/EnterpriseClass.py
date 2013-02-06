@@ -1,4 +1,4 @@
-from UtilClass import Util
+
 
 class Enterprise(object):
 	'''The enterprise herself.'''

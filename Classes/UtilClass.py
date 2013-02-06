@@ -72,7 +72,7 @@ _\ \| |_| (_| || |     / /   | |  |  __/|   <
 	# @staticmethod
 	# def dead(entity):
 		# '''Displays a message on screen and in function of the object makes 
-		   # some modification in the game
+		# some modification in the game
 		# '''
 		
 		# if entity == 'E':
