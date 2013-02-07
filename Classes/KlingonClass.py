@@ -1,4 +1,3 @@
-from UtilClass import Util
 from random import randint
 
 class Klingon(object):
