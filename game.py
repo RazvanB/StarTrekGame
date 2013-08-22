@@ -1,7 +1,7 @@
 from Classes.UtilClass import *
 from string import lower
 from Classes.HelpClass import Help
-from Classes.EnterpriseClass import Enterprise
+from Models.EnterpriseClass import Enterprise
 from Classes.MapClass import Map
 from Classes.QuadrantClass import Quadrant
 import math

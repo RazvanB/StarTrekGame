@@ -1,5 +1,5 @@
 from random import randint
-from PositionClass import Position
+from Models.PositionClass import Position
 from os import system
 
 class Util(object):
