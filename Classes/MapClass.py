@@ -1,12 +1,12 @@
 from sys import maxint
 from QuadrantClass import Quadrant
 from UtilClass import Util
-from StarClass import Star
-from StarBaseClass import StarBase
-from KlingonClass import Klingon
-from EnterpriseClass import Enterprise
+from Models.StarClass import Star
+from Models.StarBaseClass import StarBase
+from Models.KlingonClass import Klingon
+from Models.EnterpriseClass import Enterprise
 import math
-from Classes.PositionClass import Position
+from Models.PositionClass import Position
 
 class Map(object):
 	
