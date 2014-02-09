@@ -105,20 +105,13 @@ class Map(object):
 		
 		x0 = currentPos.AbsoluteX
 		y0 = currentPos.AbsoluteY
-		angle = (1 - course) * 0.785
+		angle = (1 - course) * 0.785398
 		
-		xoffset = 8 * warp* math.cos(angle)
-		if xoffset > 0:
-			x = x0 + int(math.ceil(xoffset))
-		else:
-			x = x0 + int(math.floor(xoffset))
+		xoffset = 8 * warp* math.sin(angle)
+		x = x0 + int(round(xoffset))
 		
 		yoffset = 8 * warp * math.cos(angle)
-		
-		if(yoffset > 0):
-			y = y0 + int(math.ceil(yoffset))
-		else:
-			y = y0 + int(math.floor(yoffset))
+		y = y0 + int(round(yoffset))
 		
 		(canMove, newPos) = self.checkPath(course, currentPos, Position(ax = x,ay = y))
 		if canMove:

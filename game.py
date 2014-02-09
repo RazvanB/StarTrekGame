@@ -1,9 +1,10 @@
-from Classes.UtilClass import *
+from Classes.UtilClass import Util
 from string import lower
 from Classes.HelpClass import Help
 from Models.EnterpriseClass import Enterprise
 from Classes.MapClass import Map
-from Classes.QuadrantClass import Quadrant
+from Classes.Commands import Commands
+from random import randint
 
 class Game(object):
 	
@@ -14,6 +15,8 @@ class Game(object):
 		
 	def initGame(self):
 		'''Prepare the game and the map'''
+		
+		self.Commands = Commands()
 		self.RemainingStarDays = 40 + randint(0, 11)
 		self.CurrentStarDate = 1513.0
 		self.TotalKlingons = 15 + randint(0, 7)
@@ -186,51 +189,17 @@ class Game(object):
 		self.isRestart(answer)
 			
 		if lower(answer) == 'nav':
-			self.navigationCommand()
+			self.Commands.navigationCommand(self)
 		elif lower(answer) == 'pha':
-			self.pahserCommand()
+			self.Commands.pahserCommand()
 		elif lower(answer) == 'tor':
-			self.torpedoCommand()
+			self.Commands.torpedoCommand()
 		elif lower(answer) == 'she':
-			self.shieldControl()
+			self.Commands.shieldControl()
 		elif lower(answer) == 'com':
-			self.computerCommand()
+			self.Commands.computerCommand()
 			
-	def navigationCommand(self):
-		'''Command to move the Enterprise '''
-		
-		Util.displayNavigationCommand(NavParam.COURSE)
-		
-		try:
-			course = int(Util.prompt())	
-			if course < 1 or course > 9:
-				print 'Invalid course.'
-				return
-		except ValueError: 
-			print 'Invalid course.'
-			return
-			
-		Util.displayNavigationCommand(NavParam.WARP_FACTOR)
-		
-		try:
-			warp = float(Util.prompt())	
-			if warp < 0.1 or warp > 8.0:
-				print 'Invalid warp factor.'
-				return
-		except ValueError: 
-			print 'Invalid warp factor.'
-			return
-		
-		(canMove, newPos) = self.map.moveEnterprise(course, warp, self.TheEnterprise.Position)
-		if not canMove: 
-			self.displayAllRangeScan('Error! the path is blocked')
-		else:
-			self.TheEnterprise.Position = newPos 
-			self.EnterpriseQuadrant = self.map.Quadrants[newPos.QuadrantX][newPos.QuadrantY]
-			Util.clear()
-			self.displayAllRangeScan('Warp engine engaged')
-			self.displayCondition()
-			Util.displayCommands()
+	
 			
 #create game
 g = Game()
