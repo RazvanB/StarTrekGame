@@ -187,17 +187,24 @@ class Game(object):
 		'''Wait commands from the user '''
 		answer = Util.prompt()
 		self.isRestart(answer)
+		
+		message = ''
 			
 		if lower(answer) == 'nav':
-			self.Commands.navigationCommand(self)
+			message = self.Commands.navigationCommand(self)
 		elif lower(answer) == 'pha':
 			self.Commands.pahserCommand()
 		elif lower(answer) == 'tor':
 			self.Commands.torpedoCommand()
 		elif lower(answer) == 'she':
-			self.Commands.shieldControl()
+			self.Commands.shieldCommand(self)
 		elif lower(answer) == 'com':
 			self.Commands.computerCommand()
+		
+		Util.clear()
+		self.displayAllRangeScan(message)
+		self.displayCondition()
+		Util.displayCommands()
 			
 	
 			

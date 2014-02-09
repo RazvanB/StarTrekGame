@@ -142,6 +142,7 @@ col = Change Screen Color to Green
 con = Change Screen Contrast Low
 exit = Return To The Main Command	
 """
+	
 	@staticmethod
 	def displayStatusCommand(time, klingons, starbases, warpDamage, shortScanDamage, 
 							longScanDamage, shieldDamage, mainCompDamage, torDamage, phaDamage):
@@ -219,7 +220,23 @@ STAR TREK - CUMULATIVE GALACTIC RECORD
 (TO CONTINUE, HIT 'RETURN')		
 """
 
+	@staticmethod
+	def displayShieldCommand(currentShield, energyLeft):
+		'''Display informations about shield command '''
+		
+		print """
+--- Shield Controls --------
+Enter a positive value to increase shields (1 through %d).""" %(energyLeft)
+
+		if currentShield > 0:
+			print """
+Enter a negative value to decrease shields (-1 through %d).""" %(-currentShield)
+		
+		print "Enter shield value:"
+	
+
 #other auxiliar classes	
+
 class NavParam(object):
 	COURSE = 1	
 	WARP_FACTOR = 2
