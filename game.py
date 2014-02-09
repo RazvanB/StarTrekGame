@@ -182,6 +182,7 @@ class Game(object):
 			return "#KLINGONS, #STARBASES, #STARS"
 
 	def command(self):
+		'''Wait commands from the user '''
 		answer = Util.prompt()
 		self.isRestart(answer)
 			
@@ -232,5 +233,7 @@ class Game(object):
 			self.displayCondition()
 			Util.displayCommands()
 			
+#create game
 g = Game()
+#start game
 g.start()

@@ -107,8 +107,8 @@ class Map(object):
 		y0 = currentPos.AbsoluteY
 		angle = (1 - course) * 0.785
 		
-		x = int(x0 + 8 * warp * math.sin(angle))
-		y = int(y0 + 8 * warp * math.cos(angle))
+		x = x0 + int(8 * warp * math.sin(angle))
+		y = y0 + int(8 * warp * math.cos(angle))
 		
 		(canMove, newPos) = self.checkPath(course, currentPos, Position(ax = x,ay = y))
 		if canMove:
@@ -119,75 +119,62 @@ class Map(object):
 			
 		return (canMove, newPos)
 		
-		
-		
 	def checkPath(self, course, pos0, pos):
-		''' Verifies if the path between the two positions is blocked '''
+		''' Verifies if the path between the two positions is blocked. 
+			Only the current quadrant is verified because afterwards it enters in hyperspace
+		'''
 		
-		qx = pos0.QuadrantX
-		qy = pos0.QuadrantY
+		qx0 = pos0.QuadrantX
+		qy0 = pos0.QuadrantY
+		
+		qx = pos.QuadrantX
+		qy = pos.QuadrantY
 		
 		x = pos0.SectorX
 		y = pos0.SectorY
 		
-		if self.Quadrants[pos.QuadrantX][pos.QuadrantY].Sectors[pos.SectorX][pos.SectorY] != ' ':
+		'the destionation is blocked'
+		if self.Quadrants[qx][qy].Sectors[pos.SectorX][pos.SectorY] != ' ':
 			return False, pos0
 		
-		if course == 1:
-			while(True):
-				y += 1
-				if y == 8: break
-				if self.Quadrants[qx][qy].Sectors[x][y] != ' ':
-					return False, Position(qx, qy, x, y)
-		elif course == 2:
-			while(True):
-				y += 1
-				x -= 1
-				if y == 8: break
-				if self.Quadrants[qx][qy].Sectors[x][y] != ' ':
-					return False, pos0
-		elif course == 3:
-			while(True):
-				x -= 1
-				if x == -1: break
-				if self.Quadrants[qx][qy].Sectors[x][y] != ' ':
-					return False, pos0
-		elif course == 4:
-			while(True):
-				y -= 1
-				x -= 1
-				if y == -1: break
-				if self.Quadrants[qx][qy].Sectors[x][y] != ' ':
-					return False, pos0
-		elif course == 5:
-			while(True):
-				y -= 1
-				if y == -1: break
-				if self.Quadrants[qx][qy].Sectors[x][y] != ' ':
-					return False, pos0
-		elif course == 6:
-			while(True):
-				y -= 1
-				x += 1
-				if y == 8: break
-				if self.Quadrants[qx][qy].Sectors[x][y] != ' ':
-					return False, pos0
-		elif course == 7:
-			while(True):
-				x += 1
-				if x == 8: break
-				if self.Quadrants[qx][qy].Sectors[x][y] != ' ':
-					return False, pos0
-		elif course == 8:
-			while(True):
-				y += 1
-				x += 1
-				if y == 8: break
-				if self.Quadrants[qx][qy].Sectors[x][y] != ' ':
-					return False, pos0
-		
-		return True, pos
+		while(True):
+			(x,y) = self.moveCourseOnePosition(course, (x,y))
+			
+			if y == 8 or y == -1 or x == 8 or x == -1: break
+			
+			if qx0 == qx and qy0 == qy and pos.SectorX == x and pos.SectorY == y: break;
+			
+			if self.Quadrants[qx0][qy0].Sectors[x][y] != ' ':
+				return False, Position(qx0, qy0, x, y)
 				
+		return True, pos
+	
+	def moveCourseOnePosition(self, course, (x0, y0)):
+		'''Returns the next position in function of the course '''
+		
+		if course == 1:
+				y0 += 1
+		elif course == 2:
+				y0 += 1
+				x0 -= 1
+		elif course == 3:
+				x0 -= 1
+		elif course == 4:
+				y0 -= 1
+				x0 -= 1
+		elif course == 5:
+				y0 -= 1
+		elif course == 6:
+				y0 -= 1
+				x0 += 1
+		elif course == 7:
+				x0 += 1
+		elif course == 8:
+				y0 += 1
+				x0 += 1
+		
+		return (x0, y0)
+	
 	def getInformations(self, x, y):
 		''' Returns informations about the given quadrant '''
 		
