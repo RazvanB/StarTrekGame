@@ -83,7 +83,7 @@ class Game(object):
 			print 'Condition %s: %s' %(self.CurrentCondition, 'Low energy level, return to starbase.')
 		else:
 			self.CurrentCondition = 'GREEN'
-			print 'Condition %s": %s' %(self.CurrentCondition, 'This quadrant is clear.')
+			print 'Condition %s: %s' %(self.CurrentCondition, 'This quadrant is clear.')
 		print '-'
 	
 	def isRestart(self, answer):
@@ -199,7 +199,7 @@ class Game(object):
 		elif lower(answer) == 'she':
 			self.Commands.shieldCommand(self)
 		elif lower(answer) == 'com':
-			self.Commands.computerCommand()
+			self.Commands.computerCommand(self)
 		
 		Util.clear()
 		self.displayAllRangeScan(message)

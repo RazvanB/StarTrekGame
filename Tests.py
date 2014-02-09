@@ -1,9 +1,7 @@
-from Classes.UtilClass import *
-from random import randint
-from Classes.PositionClass import Position
+from Classes.UtilClass import Util, NavParam
 from Classes.MapClass import Map
 from Classes.QuadrantClass import Quadrant
-from Classes.KlingonClass import Klingon
+
 
 #test status method
 Util.displayStatusCommand(1,2,3,4,5,6,7,8,9,10)

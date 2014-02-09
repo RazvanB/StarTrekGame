@@ -1,6 +1,6 @@
 from sys import maxint
 from QuadrantClass import Quadrant
-from UtilClass import Util
+from UtilClass import Util, Random
 from Models.StarClass import Star
 from Models.StarBaseClass import StarBase
 from Models.KlingonClass import Klingon
@@ -42,7 +42,7 @@ class Map(object):
 		stars = self.NO_STARS
 		
 		while stars > 0:
-			pos = Util.getRandomPosition()
+			pos = Random.getRandomPosition()
 			qx = pos.QuadrantX
 			qy = pos.QuadrantY
 			sx = pos.SectorX
@@ -57,7 +57,7 @@ class Map(object):
 		''' Place the enemy ships on the map '''
 		
 		while klingons > 0:
-			pos = Util.getRandomPosition()
+			pos = Random.getRandomPosition()
 			qx = pos.QuadrantX
 			qy = pos.QuadrantY
 			sx = pos.SectorX
@@ -72,7 +72,7 @@ class Map(object):
 		''' Place starbases on the map '''
 		
 		while starbases > 0:
-			pos = Util.getRandomPosition()
+			pos = Random.getRandomPosition()
 			qx = pos.QuadrantX
 			qy = pos.QuadrantY
 			sx = pos.SectorX
@@ -87,7 +87,7 @@ class Map(object):
 		'''Place The Enterprise on the map and returns it's position'''
 		
 		while True:
-			pos = Util.getRandomPosition()
+			pos = Random.getRandomPosition()
 			qx = pos.QuadrantX
 			qy = pos.QuadrantY
 			sx = pos.SectorX

@@ -1,9 +1,10 @@
 from random import randint
+from math import hypot
 from Models.PositionClass import Position
 from os import system
 
 class Util(object):
-	'''Helper class'''
+	'''Helper class for GUI'''
 	
 	@staticmethod
 	def clear():
@@ -11,32 +12,17 @@ class Util(object):
 		
 	@staticmethod
 	def resizeConsole(w, h):
-		system('mode %d,%d' %(w,h))
+		system('mode %d,%d' % (w, h))
 	
 	@staticmethod
 	def prompt():
-		return raw_input('>')
-
-	@staticmethod
-	def getRandomPosition():
-		''' Returns a random position on the map '''
-		
-		ax = randint(0, 63)
-		ay = randint(0, 63)
-			
-		qx = ax / 8
-		sx = ax % 8
-		
-		qy = ay / 8
-		sy = ay % 8
-		
-		return Position(qx, qy, sx, sy)
+		return raw_input('>')	
 	
 	@staticmethod
 	def asciiArt():
 		''' Ascii art of The Enterprise '''
 		
-		chose = randint(0,1)
+		chose = randint(0, 1)
 		
 		if chose == 0:
 			print """
@@ -96,7 +82,7 @@ _\ \| |_| (_| || |     / /   | |  |  __/|   <
  %d STARBASES IN THE GALAXY FOR RESUPPLYING YOUR SHIP.
 -
  HIT 'RETURN' WHEN YOU'RE READY TO ASSUME COMMAND ---		
-""" %(klingons, finalStarDate, days, starbases)
+""" % (klingons, finalStarDate, days, starbases)
 
 	@staticmethod
 	def displayCommands():
@@ -144,8 +130,7 @@ exit = Return To The Main Command
 """
 	
 	@staticmethod
-	def displayStatusCommand(time, klingons, starbases, warpDamage, shortScanDamage, 
-							longScanDamage, shieldDamage, mainCompDamage, torDamage, phaDamage):
+	def displayStatusCommand(time, klingons, starbases, enterprise):
 		''' Displays informations about the Enterprise '''
 		
 		print """
@@ -165,8 +150,8 @@ Photon Torpedo Control Damage: %d
                 Phaser Damage: %d
 -
 (TO CONTINUE, HIT 'RETURN')		
-""" %(time, klingons, starbases, warpDamage, shortScanDamage,
-	longScanDamage, shieldDamage, mainCompDamage, torDamage, phaDamage)
+""" % (time, klingons, starbases, enterprise.warpDamage, enterprise.shortScanDamage,
+	enterprise.longScanDamage, enterprise.shieldDamage, enterprise.mainCompDamage, enterprise.torDamage, enterprise.phaDamage)
 	
 	@staticmethod
 	def displayRecordCommand(quadrants):
@@ -179,42 +164,42 @@ STAR TREK - CUMULATIVE GALACTIC RECORD
    |        ANTARES        |         SIRIUS        |
 """
 		
-		print " 1 |" + " ".join(quadrants[0][0:4]) + "|" + " ".join(quadrants[0][4:8]) + "|"
+		print " 1 |" + " ".join(q.GetInformations() for q in quadrants[0][0:4]) + "|" + " ".join(q.GetInformations() for q in quadrants[0][4:8]) + "|"
 
 		print """   -------------------------------------------------
    |         RIGEL         |         DENEB         |"""
 
-		print " 2 |" + " ".join(quadrants[1][0:4]) + "|" + " ".join(quadrants[1][4:8]) + "|"
+		print " 2 |" + " ".join(q.GetInformations() for q in quadrants[1][0:4]) + "|" + " ".join(q.GetInformations() for q in quadrants[1][4:8]) + "|"
 
 		print """   -------------------------------------------------
    |        PROCYON        |        CAPELLA        |"""
 
-		print " 3 |" + " ".join(quadrants[2][0:4]) + "|" + " ".join(quadrants[2][4:8]) + "|"
+		print " 3 |" + " ".join(q.GetInformations() for q in quadrants[2][0:4]) + "|" + " ".join(q.GetInformations() for q in quadrants[2][4:8]) + "|"
 
 		print """   -------------------------------------------------
    |         VEGA          |       BETELGEUSE      |"""
 
-		print " 4 |" + " ".join(quadrants[3][0:4]) + "|" + " ".join(quadrants[3][4:8]) + "|"
+		print " 4 |" + " ".join(q.GetInformations() for q in quadrants[3][0:4]) + "|" + " ".join(q.GetInformations() for q in quadrants[3][4:8]) + "|"
 
 		print """   -------------------------------------------------
    |        CANOPUS        |       ALDEBARAN       |"""
 
-		print " 5 |" + " ".join(quadrants[4][0:4]) + "|" + " ".join(quadrants[4][4:8]) + "|"
+		print " 5 |" + " ".join(q.GetInformations() for q in quadrants[4][0:4]) + "|" + " ".join(q.GetInformations() for q in quadrants[4][4:8]) + "|"
 
 		print """   -------------------------------------------------
    |        ALTAIR         |        REGULUS        |"""
 
-		print " 6 |" + " ".join(quadrants[5][0:4]) + "|" + " ".join(quadrants[5][4:8]) + "|"
+		print " 6 |" + " ".join(q.GetInformations() for q in quadrants[5][0:4]) + "|" + " ".join(q.GetInformations() for q in quadrants[5][4:8]) + "|"
 
 		print """   -------------------------------------------------
    |      SAGITTARIUS      |        ARCTURUS       |"""
 
-		print " 7 |" + " ".join(quadrants[6][0:4]) + "|" + " ".join(quadrants[6][4:8]) + "|"
+		print " 7 |" + " ".join(q.GetInformations() for q in quadrants[6][0:4]) + "|" + " ".join(q.GetInformations() for q in quadrants[6][4:8]) + "|"
 
 		print """   -------------------------------------------------
    |        POLLUX         |         SPICA         |"""
 
-		print " 8 |" + " ".join(quadrants[7][0:4]) + "|" + " ".join(quadrants[7][4:8]) + "|"
+		print " 8 |" + " ".join(q.GetInformations() for q in quadrants[7][0:4]) + "|" + " ".join(q.GetInformations() for q in quadrants[7][4:8]) + "|"
 
 		print """   -------------------------------------------------
 (TO CONTINUE, HIT 'RETURN')		
@@ -226,17 +211,44 @@ STAR TREK - CUMULATIVE GALACTIC RECORD
 		
 		print """
 --- Shield Controls --------
-Enter a positive value to increase shields (1 through %d).""" %(energyLeft)
+Enter a positive value to increase shields (1 through %d).""" % (energyLeft)
 
 		if currentShield > 0:
 			print """
-Enter a negative value to decrease shields (-1 through %d).""" %(-currentShield)
+Enter a negative value to decrease shields (-1 through %d).""" % (-currentShield)
 		
 		print "Enter shield value:"
 	
 
-#other auxiliar classes	
+# other auxiliar classes	
 
 class NavParam(object):
 	COURSE = 1	
 	WARP_FACTOR = 2
+
+class Random(object):
+	'''Helper class used to simulate chance in the game '''
+	
+	@staticmethod
+	def getRandomPosition():
+		''' Returns a random position on the map '''
+		
+		ax = randint(0, 63)
+		ay = randint(0, 63)
+			
+		qx = ax / 8
+		sx = ax % 8
+		
+		qy = ay / 8
+		sy = ay % 8
+		
+		return Position(qx, qy, sx, sy)
+	
+
+class GeoMath(object):
+	'''Helper class  for game geometry '''
+	
+	@staticmethod
+	def distance((x1, y1), (x2, y2)):
+		return hypot(x1 - x2, y1 - y2)
+	

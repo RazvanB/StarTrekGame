@@ -15,6 +15,13 @@ class Enterprise(object):
 		self.Torpedos = self.NR_TORPEDOS
 		self.Docked = False
 		self.Position = pos
+		self.warpDamage = 0.0
+		self.shortScanDamage = 0.0
+		self.longScanDamage = 0.0
+		self.shieldDamage = 0.0
+		self.mainCompDamage = 0.0
+		self.torDamage = 0.0
+		self.phaDamage = 0.0
 	
 	def ReceivedDamage(self, damage):
 		'''Called when the ship was hit '''

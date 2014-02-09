@@ -21,8 +21,12 @@ class Position(object):
 		return '[%d,%d]' %(self.QuadrantX + 1, self.QuadrantY + 1)
 		
 	def GetSector(self):
-		'''Returns the quadrant coordinates as string'''
+		'''Returns the sector coordinates as string'''
 		return '[%d,%d]' %(self.SectorX + 1, self.SectorY + 1)
+	
+	def GetSectorCoordinates(self):
+		'''Returns the sector coordinates as a tuple '''
+		return (self.SectorX, self.SectorY)
 	
 	def Print(self):
 		'''For debugging'''

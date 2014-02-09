@@ -1,4 +1,5 @@
-from Classes.UtilClass import Util, NavParam
+from Classes.UtilClass import Util, NavParam, GeoMath
+from string import lower
 
 class Commands(object):
     
@@ -8,8 +9,8 @@ class Commands(object):
         Util.displayNavigationCommand(NavParam.COURSE)
         
         try:
-            course = int(Util.prompt())    
-            if course < 1 or course > 9:
+            course = float(Util.prompt())    
+            if course < 1.0 or course > 8.0:
                 print 'Invalid course.'
                 return ''
         except ValueError: 
@@ -57,9 +58,43 @@ class Commands(object):
         
         print 'Shield strength is now %d. Energy level is now %d' %(game.TheEnterprise.Shield, game.TheEnterprise.Energy)
         Util.prompt()
+    
+    def computerCommand(self, game):
+        '''Displays the computer commands'''
         
         Util.clear()
+        game.displayAllRangeScan('')
         game.displayCondition()
-        Util.displayCommands()
+        Util.displayComputerCommands()
+        
+        command = Util.prompt()
+        
+        if lower(command) == 'rec':
+            Util.clear()
+            Util.displayRecordCommand(game.map.Quadrants)
+            Util.prompt()
+        elif lower(command) == 'sta':
+            Util.clear()
+            Util.displayStatusCommand(game.RemainingStarDays, game.TotalKlingons, game.TotalStarBases, game.TheEnterprise)
+            Util.prompt()
+        elif lower(command) == 'bas':
+            self.calculateStarBaseCommand(game)
+        elif lower(command) == 'nav':
+            self.calculateNavigationCommand(game)
+        
     
+    def calculateStarBaseCommand(self, game):
+        if game.EnterpriseQuadrant.NoOfStarBases == 0:
+            print 'There are no starbases in this quadrant.'
+        else:
+            for starbase in game.EnterpriseQuadrant.StarBases:  
+                dist = GeoMath.distance(game.TheEnterprise.Position.GetSectorCoordinates(), starbase.Position.GetSectorCoordinates())
+                direction = 0.0
+                print """Starbase in sector %s.
+Direction: %.2f
+Distance:  %.2f""" %(starbase.Position.GetSector(), direction, dist)
+        Util.prompt()
+    
+    
+            
     
