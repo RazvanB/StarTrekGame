@@ -10,11 +10,11 @@ class Commands(object):
         
         try:
             course = float(Util.prompt())    
-            if course < 1.0 or course > 8.0:
-                print 'Invalid course.'
+            if course < 1.0 or course > 9.0:
+                Util.printMessage('Invalid course.')
                 return ''
         except ValueError: 
-            print 'Invalid course.'
+            Util.printMessage('Invalid course.')
             return ''
             
         Util.displayNavigationCommand(NavParam.WARP_FACTOR)
@@ -22,10 +22,10 @@ class Commands(object):
         try:
             warp = float(Util.prompt())    
             if warp < 0.1 or warp > 8.0:
-                print 'Invalid warp factor.'
+                Util.printMessage('Invalid warp factor.')
                 return ''
         except ValueError: 
-            print 'Invalid warp factor.'
+            Util.printMessage('Invalid warp factor.')
             return ''
         
         (canMove, newPos) = game.map.moveEnterprise(course, warp, game.TheEnterprise.Position)
@@ -47,16 +47,16 @@ class Commands(object):
         try:
             shield = int(Util.prompt())    
             if shield < (-currentShield) or shield > currentEnergy:
-                print 'Invalid amount of energy.'
+                Util.printMessage('Invalid amount of energy.')
                 return
         except ValueError: 
-            print 'Invalid amount of energy.'
+            Util.printMessage('Invalid amount of energy.')
             return
         
         game.TheEnterprise.Shield += shield
         game.TheEnterprise.Energy -= shield
         
-        print 'Shield strength is now %d. Energy level is now %d' %(game.TheEnterprise.Shield, game.TheEnterprise.Energy)
+        Util.printMessage('Shield strength is now {0}. Energy level is now {1}', game.TheEnterprise.Shield, game.TheEnterprise.Energy)
         Util.prompt()
     
     def computerCommand(self, game):
@@ -82,10 +82,11 @@ class Commands(object):
         elif lower(command) == 'nav':
             self.calculateNavigationCommand(game)
         
-    
     def calculateStarBaseCommand(self, game):
+        '''Command to calculate the distance to dock to a starbase in the current quadrant'''
+        
         if game.EnterpriseQuadrant.NoOfStarBases == 0:
-            print 'There are no starbases in this quadrant.'
+            Util.printMessage('There are no starbases in this quadrant.')
         else:
             for starbase in game.EnterpriseQuadrant.StarBases:  
                 dist = GeoMath.distance(game.TheEnterprise.Position.GetSectorCoordinates(), starbase.Position.GetSectorCoordinates())
@@ -95,6 +96,40 @@ Direction: %.2f
 Distance:  %.2f""" %(starbase.Position.GetSector(), direction, dist)
         Util.prompt()
     
+    def phaserCommand(self, game):
+        '''Command to fire with phaser'''
+        
+        if game.EnterpriseQuadrant.NoOfKlingons == 0:
+            Util.printMessage('There are no Klingon ships in this quadrant.')
+            return
+        
+        Util.printMessage('Phasers locked on target.')
+        Util.printMessage('Enter phaser energy (1 - {0}):', game.TheEnterprise.Energy)
+        Util.prompt()
     
+
+    def torpedoCommand(self, game):
+        '''Command to fire a torpedo'''
+        
+        if game.EnterpriseQuadrant.NoOfKlingons == 0:
+            print 'There are no Klingon ships in this quadrant.'
+        else:
+            Util.displayDirections()
             
-    
+            for ship in game.EnterpriseQuadrant.Klingons:
+                Util.printMessage('Klingon ship in sector {0}', ship.Position.GetSector())
+            
+            Util.printMessage('Enter firing direction (1.0--9.0):')
+            Util.prompt()
+            
+            #get direction from input
+            try:
+                direction = float(Util.prompt())    
+                if direction < 1.0 or direction > 9.0:
+                    Util.printMessage('Invalid direction.')
+                return ''
+            except ValueError: 
+                    Util.printMessage('Invalid direction.')
+                    return ''
+            
+            

@@ -20,7 +20,9 @@ class Klingon(object):
 		self.ENG_LOW_LIMIT = 0.2 * self.Energy
 	
 	def ReceivedDamage(self, damage):
-		'''Called when the ship was hit '''
+		'''Called when the ship was hit.
+			Returns a negative value if the ship is destroyed, or the counter attack energy
+		'''
 		
 		self.Shield -= damage
 		
@@ -35,7 +37,7 @@ class Klingon(object):
 			self.Energy = 0.0
 			return 0
 			
-		#if the ship has enough energy counter-attack
+		#if the ship has enough energy then counter-attack
 		if self.Energy >= self.ENG_HIGH_LIMIT:
 			return  randint(0, 10) * 0.1 * self.Energy
 

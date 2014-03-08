@@ -43,7 +43,7 @@ class Game(object):
 		Util.clear()
 		Util.asciiArt()
 		
-		print  'DO YOU NEED INSTRUCTIONS (YES/NO)'
+		Util.printMessage('DO YOU NEED INSTRUCTIONS (YES/NO)')
 		answer = Util.prompt()
 		
 		if answer != None and (lower(answer) == 'y' or lower(answer) == 'yes'):
@@ -66,11 +66,11 @@ class Game(object):
 	def displayCondition(self):
 		''' Display the condition of the Enterprise '''
 		
-		print '-'
+		Util.printMessage('-')
 		if self.EnterpriseQuadrant.NoOfKlingons > 0 and  self.TheEnterprise.Shield == 0:
 			self.CurrentCondition = 'RED'
 			print 'Condition %s: %s' %(self.CurrentCondition, 'Klingon ship detected')
-			print 'Warning: Shields are down'
+			Util.printMessage('Warning: Shields are down')
 		elif self.EnterpriseQuadrant.NoOfKlingons > 0 and self.TheEnterprise.Shield > 0:
 			self.CurrentCondition = 'RED'
 			print 'Condition %s: %s' %(self.CurrentCondition, 'Klingon ship detected')
@@ -84,7 +84,7 @@ class Game(object):
 		else:
 			self.CurrentCondition = 'GREEN'
 			print 'Condition %s: %s' %(self.CurrentCondition, 'This quadrant is clear.')
-		print '-'
+		Util.printMessage('-')
 	
 	def isRestart(self, answer):
 		if lower(answer) == 'xxx':
@@ -104,13 +104,13 @@ class Game(object):
 		gap_len_FirstInfo = len(self.getEnterpriseInformation(1))
 		
 		if len(message) > 0:
-			print "STAR TREK - %s" %message
+			Util.printMessage("STAR TREK - {0}",message)
 		else:
-			print "STAR TREK"
+			Util.printMessage("STAR TREK")
 			
 		firstLineGap = CST_SHORT_RANGE_MAP - len('SHORT RANGE SCAN') + CST_GAP_SR_INFO + gap_len_FirstInfo + 3 * CST_GAP_INFO_LR 
 
-		print 'SHORT RANGE SCAN' + ' ' * firstLineGap + 'LONG RANGE SCAN'
+		Util.printMessage('SHORT RANGE SCAN' + ' ' * firstLineGap + 'LONG RANGE SCAN')
 		
 		for line in range(1, 11):
 			print self.getShortRangeScan(line),

@@ -16,7 +16,16 @@ class Util(object):
 	
 	@staticmethod
 	def prompt():
-		return raw_input('>')	
+		return raw_input('>')
+	
+	@staticmethod
+	def printMessage(message, value1 = None, value2 = None):
+		if value1 == None and value2 == None:
+			print message
+		elif value1 != None and value2 == None:
+			print message.format(value1)
+		else:
+			print message.format(value1, value2)
 	
 	@staticmethod
 	def asciiArt():
@@ -97,11 +106,9 @@ xxx = Restart
 Enter command:"""
 
 	@staticmethod
-	def displayNavigationCommand(param):
-		''' Set navigation parameteres '''
-		
-		if param == NavParam.COURSE:
-			print """
+	def displayDirections():
+		'''Graphical representation of directions'''
+		print """
  4    3    2
   `.  :  .' 
     `.:.'   
@@ -109,8 +116,15 @@ Enter command:"""
     .':`.   
   .'  :  `. 
  6    7    8
-Enter course (1.0--9.0):
 """
+	
+	@staticmethod
+	def displayNavigationCommand(param):
+		''' Set navigation parameteres '''
+		
+		if param == NavParam.COURSE:
+			Util.displayDirections()
+			print 'Enter course (1.0--9.0):'
 		elif param == NavParam.WARP_FACTOR:
 			print "Enter warp factor (0.1--8.0):"
 	
@@ -250,5 +264,12 @@ class GeoMath(object):
 	
 	@staticmethod
 	def distance((x1, y1), (x2, y2)):
+		''' Returns the distance  between two catezian points '''
+		
 		return hypot(x1 - x2, y1 - y2)
 	
+	@staticmethod
+	def hittingEnergy(energy, distance):
+		''' Returns the dissipated energy at a given distance '''
+		
+		return (1.0 - 0.05 * distance) * energy
